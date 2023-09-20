@@ -91,53 +91,42 @@ Solusi yang diusulkan untuk pengembangan sistem rekomendasi produk e-commerce be
 
 Solusi yang kami akan kembangkan akan memiliki infrastruktur sebagai berikut
 
-```
-   +--------------------------------------------------------------------+
-   |                                                                    |
-   |                      Data Ulasan Pengguna                          |
-   |                                                                    |
-   +--------------------------------------------------------------------+
-                                        |
-                                        v
-   +--------------------------------------------------------------------+
-   |                                                                    |
-   |               Analisis Sentimen dan Pengolahan Data                 |
-   |                                                                    |
-   +--------------------------------------------------------------------+
-                                        |
-                                        v
-   +--------------------------------------------------------------------+
-   |                                                                    |
-   |               Penggunaan Algoritma Rekomendasi                      |
-   |                                                                    |
-   +--------------------------------------------------------------------+
-                                        |
-                                        v
-   +--------------------------------------------------------------------+
-   |                                                                    |
-   |                    Rekomendasi Produk                              |
-   |                                                                    |
-   +--------------------------------------------------------------------+
-                                        |
-                                        v
-   +--------------------------------------------------------------------+
-   |                                                                    |
-   |               Integrasi dengan Platform E-commerce                   |
-   |                                                                    |
-   +--------------------------------------------------------------------+
-                                        |
-                                        v
-   +--------------------------------------------------------------------+
-   |                                                                    |
-   |               Pelacakan Kinerja dan Peningkatan Terus-Menerus        |
-   |                                                                    |
-   +--------------------------------------------------------------------+
+### As-is(Status-awal):
 
-```
+<img src="./images/Flowchart(Status%20Awal(As-is)).png" alt="status-awal" />
+
+### To-be(Status Yang Diinginkan)
+
+<img src="./images/Flowchart(To-be).png" alt="status-yang-diinginkan" />
+
+
+
 
 ## Financial Benefit
 
 Penerapan sistem rekomendasi produk berdasarkan analisis sentimen ulasan pengguna diharapkan akan membawa sejumlah manfaat keuangan yang signifikan bagi perusahaan. Dengan rekomendasi produk yang lebih akurat dan relevan, diharapkan akan terjadi peningkatan dalam tingkat konversi penjualan, meningkatkan nilai pesanan rata-rata (AOV), dan mengurangi tingkat keranjang belanja yang ditinggalkan. Ini secara langsung akan berkontribusi pada peningkatan pendapatan perusahaan. Selain itu, meningkatnya retensi pelanggan akan mengurangi biaya akuisisi pelanggan baru, sementara pengoptimalan inventaris akan menghindari kerugian akibat overstock atau understock. Selain manfaat finansial yang langsung terlihat, penggunaan teknologi ini juga dapat memberikan keunggulan kompetitif, meningkatkan kepuasan pelanggan, dan memungkinkan pengoptimalan strategi pemasaran dan promosi. Semua ini bersama-sama akan menciptakan dampak positif terhadap laporan keuangan perusahaan.
+
+
+### Finacial Benefit Solution
+
+| Jenis Pengeluaran        | Volume             | Harga Satuan (Rp)  | Harga Total (Rp)  |
+|--------------------------|-------------------|--------------------|-------------------|
+| **Honorium**             |                   |                    |                   |
+| - CEO                    | 1 orang           | 50,000,000         | 50,000,000        |
+| - Fullstack Engineer     | 1 orang           | 20,000,000         | 20,000,000        |
+| - Data Scientist         | 1 orang           | 23,000,000         | 23,000,000        |
+| - Data Engineer          | 1 orang           | 17,000,000         | 17,000,000        |
+| - UX/UI Designer         | 1 orang           | 15,000,000         | 15,000,000        |
+| - Technical Writer       | 1 orang           | 14,000,000         | 14,000,000        |
+| **Total Honorium**       |                   |                    | **139.000.000**   |
+| **Lain-lain**            |                   |                    |                   |
+| - Perangkat Lunak        | 4 buah            | 1,000,000          | 4,000,000         |
+| - Sewa Server (1 tahun)  | 1 tahun           | 3,500,000          | 3,500,000         |
+| - Sewa Domain (1 tahun)  | 1 tahun           | 500,000            | 500,000           |
+| - Biaya Promosi (1 tahun)| 1 tahun           | 1,000,000          | 1,000,000         |
+| **Total Lain-lain**      |                   |                    | **9,000,000**     |
+| **Total Biaya**          |                   |                    | **148,000,000**   |
+-----------------------------------------------------------------------------------------
 
 
 ## Intangible Benefit
