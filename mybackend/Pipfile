@@ -4,7 +4,23 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
+python-dotenv = "==0.19.0"
+django = "==3.2.10"
+pytz = "==2021.1"
+asgiref = "==3.4.1"
+whitenoise = "==5.3.0"
+sqlparse = "==0.4.2"
+djangorestframework = "*"
+cloudinary = "*"
+django-cloudinary-storage = "*"
+pillow = "*"
+djangorestframework-simplejwt = "*"
+django-cors-headers = "*"
+midtransclient = "*"
+django-import-export = "*"
+psycopg2-binary = "*"
+drf-yasg2 = "*"
+pandas = "*"
 
 [dev-packages]
 
