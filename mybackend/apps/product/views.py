@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from django.http import HttpResponse
 from rest_framework import status
 from .models import Product
+from rest_framework.permissions import IsAuthenticated
 from apps.review.models import Review
 from .serializers import ProductSerializer, ReviewSerializer
 from django.shortcuts import get_object_or_404
@@ -14,6 +15,10 @@ class ProductListView(APIView):
         products = Product.objects.filter(countInStock__gt=0).order_by("id")
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ProductCreateView(APIView):
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         serializer = ProductSerializer(data=request.data)
@@ -56,7 +61,7 @@ class ProductBySlugView(APIView):
 
         product_serializer = ProductSerializer(product)
 
-        reviews = product.reviews.all()
+        reviews = product.reviews.all()[:5]
         reviews_serializer = ReviewSerializer(reviews, many=True)
 
         product_data = {
@@ -80,6 +85,8 @@ class ProductBySlugView(APIView):
 
 
 class UpdateQuantityView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def post(self, request):
         try:
             cart = request.data
@@ -90,7 +97,7 @@ class UpdateQuantityView(APIView):
                 product_id = item["product_id"]
                 quantity = item["quantity"]
 
-                product = get_object_or_404(ProductModel, id=product_id)
+                product = get_object_or_404(Product, id=product_id)
                 current_stock = product.countInStock
 
                 new_stock = current_stock - quantity
@@ -104,6 +111,8 @@ class UpdateQuantityView(APIView):
 
 
 class UpdateProductView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def put(self, request, productid):
         product = get_object_or_404(Product, id=productid)
         serializer = ProductSerializer(product, data=request.data)
@@ -114,7 +123,11 @@ class UpdateProductView(APIView):
 
 
 class DeleteProductView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def delete(self, request, productid):
         product = get_object_or_404(Product, id=productid)
         product.delete()
-        return Response("Done", status=status.HTTP_204_NO_CONTENT)
+
+        response = {"data": "Product deleted successfully"}
+        return Response(status=status.HTTP_204_NO_CONTENT)

@@ -55,12 +55,26 @@ export const updateSliderById = createAsyncThunk(
 
 export const deleteSliderById = createAsyncThunk(
   'sliders/deleteById',
-  async (id, { rejectWithValue }) => {
+  async (id, { rejectWithValue, getState }) => {
     try {
-      await myApi.delete(`/sliders/${id}`);
-      return id;
+      const { accessToken } = getState().loginReducer;
+      const response = await myApi.delete(`/sliders/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      if (error.response && error.response.status === 404) {
+        return rejectWithValue('Slider tidak ada');
+      } else if (error.response && error.response.status === 403) {
+        return rejectWithValue(
+          'Anda tidak memiliki izin untuk menghapus slider tersebut'
+        );
+      } else {
+        return rejectWithValue('Gagal menghapus slider');
+      }
     }
   }
 );

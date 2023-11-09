@@ -7,13 +7,14 @@ import { addToCart } from '../redux/cart.slice';
 import { fetchProductBySlug } from '../redux/product.slice';
 import { LoadingIndicator } from '../components/Loading';
 import { IsError } from '../components/ISError';
+import SweetAlert from '../components/Sweetalert';
 
 export default function ProductPage() {
   const { slug } = useParams();
   const dispatch = useDispatch();
   const [cartError, setCartError] = useState('');
 
-  const authToken = useSelector((state) => state.authReducer.accessToken);
+  const user = useSelector((state) => state.loginReducer.user);
 
   const product = useSelector((state) => state.productReducer.product);
   const loading = useSelector((state) => state.productReducer.loading);
@@ -22,26 +23,33 @@ export default function ProductPage() {
   const [quantity, setQuantity] = useState(1);
 
   const addCart = () => {
-    const parsedQuantity = parseInt(quantity);
-    if (
-      isNaN(parsedQuantity) ||
-      parsedQuantity <= 0 ||
-      parsedQuantity > product?.countInStock
-    ) {
-      setCartError('Invalid quantity');
-      return;
-    }
+    if (user) {
+      const parsedQuantity = parseInt(quantity);
+      if (
+        isNaN(parsedQuantity) ||
+        parsedQuantity <= 0 ||
+        parsedQuantity > product?.countInStock
+      ) {
+        setCartError('Invalid quantity');
+        return;
+      }
 
-    dispatch(
-      addToCart({
-        name: product.name,
-        price: product.price.toString(),
-        image: product.image_product,
-        quantity: parsedQuantity,
-        product: product.id,
-        weight: product.weight,
-      })
-    );
+      dispatch(
+        addToCart({
+          name: product.name,
+          price: product.price.toString(),
+          image: product.image_product,
+          quantity: parsedQuantity,
+          product: product.id,
+          weight: product.weight,
+        })
+      );
+    } else {
+      SweetAlert.error(
+        'Error',
+        'Anda harus masuk terlebih dahulu untuk menambahkan produk ke keranjang.'
+      );
+    }
   };
 
   useEffect(() => {

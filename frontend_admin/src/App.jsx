@@ -1,5 +1,4 @@
 import LayoutAdmin from '@/components/LayoutAdmin';
-import DragonPage from '@/pages/Dragon';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LayoutAuth from './components/LayoutAuth';
 import RegisterPage from './pages/auth/Register';

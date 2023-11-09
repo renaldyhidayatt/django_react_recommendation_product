@@ -12,32 +12,104 @@ const EditProductPage = () => {
 
   const { product, loading, error } = productState;
 
-  const [name, setName] = useState('');
-  const [category, setCategory] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [countInStock, setCountInStock] = useState('');
-  const [file, setFile] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    image: null,
+    categoryId: '',
+    description: '',
+    price: '',
+    brand: '',
+    weight: '',
+    rating: '',
+    countInStock: '',
+  });
+
+  const handleNameChange = (e) => {
+    setFormData({
+      ...formData,
+      name: e.target.value,
+    });
+  };
+
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFormData({
+        ...formData,
+        image: e.target.files[0],
+      });
+    }
+  };
+
+  const handleCategoryIdChange = (e) => {
+    setFormData({
+      ...formData,
+      categoryId: e.target.value,
+    });
+  };
+
+  const handleDescriptionChange = (e) => {
+    setFormData({
+      ...formData,
+      description: e.target.value,
+    });
+  };
+
+  const handlePriceChange = (e) => {
+    setFormData({
+      ...formData,
+      price: e.target.value,
+    });
+  };
+
+  const handleBrandChange = (e) => {
+    setFormData({
+      ...formData,
+      brand: e.target.value,
+    });
+  };
+
+  const handleWeightChange = (e) => {
+    setFormData({
+      ...formData,
+      weight: e.target.value,
+    });
+  };
+
+  const handleRatingChange = (e) => {
+    setFormData({
+      ...formData,
+      rating: e.target.value,
+    });
+  };
+
+  const handleCountInStockChange = (e) => {
+    setFormData({
+      ...formData,
+      countInStock: e.target.value,
+    });
+  };
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData();
+    const form = new FormData();
 
-    formData.append('name', name);
-    formData.append('category', category);
-    formData.append('description', description);
-    formData.append('price', price);
-    formData.append('countInStock', countInStock);
-    if (file) {
-      formData.append('image_product', file);
+    form.append('name', formData.name);
+    form.append('category', formData.categoryId);
+    form.append('description', formData.description);
+    form.append('countInStock', formData.countInStock);
+    form.append('brand', formData.brand);
+    form.append('weight', formData.weight);
+    form.append('rating', formData.rating);
+    form.append('price', formData.price);
+    if (formData.image) {
+      form.append('image_product', formData.image);
     }
 
-    dispatch(updateProductById({ id, formData })).then((data) => {
+    dispatch(updateProductById({ id, form })).then((data) => {
       console.log('update: ', data);
-
       navigate('/admin/product');
     });
   };
@@ -55,12 +127,18 @@ const EditProductPage = () => {
 
   useEffect(() => {
     if (product) {
-      setName(product.name);
-      setPrice(product.price.toString());
-      setDescription(product.description);
-      setCountInStock(product.countInStock.toString());
+      setFormData({
+        ...formData,
+        name: product.name,
+        price: product.price.toString(),
+        categoryId: product.category,
+        description: product.description,
+        brand: product.brand,
+        weight: product.weight,
+        rating: product.rating,
+        countInStock: product.countInStock.toString(),
+      });
     }
-    console.log(product);
   }, [product]);
 
   return (
@@ -103,8 +181,8 @@ const EditProductPage = () => {
                     id="name_produk"
                     type="text"
                     name="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={formData.name}
+                    onChange={handleNameChange}
                     placeholder="Nama Produk"
                     className="form-control"
                   />
@@ -116,10 +194,7 @@ const EditProductPage = () => {
                   <input
                     type="file"
                     name="image"
-                    onChange={(e) => {
-                      const selectedFile = e.target.files?.[0];
-                      setFile(selectedFile || null);
-                    }}
+                    onChange={handleImageChange}
                     className="form-control"
                     id="image"
                   />
@@ -130,7 +205,7 @@ const EditProductPage = () => {
                   </label>
                   <br />
                   {product?.image_product ? (
-                    <Image
+                    <img
                       src={product.image_product}
                       alt="Current Image"
                       width={100}
@@ -144,8 +219,8 @@ const EditProductPage = () => {
                 <div className="form-group">
                   <select
                     name="category_id"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
+                    value={formData.categoryId || product?.categoryId}
+                    onChange={handleCategoryIdChange}
                     className="form-control"
                   >
                     <option value="">Pilih Kategori</option>
@@ -164,8 +239,46 @@ const EditProductPage = () => {
                     name="description"
                     placeholder="Deskripsi"
                     className="form-control"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={formData.description}
+                    onChange={handleDescriptionChange}
+                  />
+                </div>
+
+                <label htmlFor="brand">Brand: </label>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    placeholder="Brand"
+                    className="form-control"
+                    id="brand"
+                    name="brand"
+                    value={formData.brand}
+                    onChange={handleBrandChange}
+                  />
+                </div>
+                <label htmlFor="weight">Weight: </label>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    placeholder="Weight"
+                    className="form-control"
+                    id="weight"
+                    name="weight"
+                    value={formData.weight}
+                    onChange={handleWeightChange}
+                  />
+                </div>
+
+                <label htmlFor="rating">Rating: </label>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    placeholder="Rating"
+                    className="form-control"
+                    id="rating"
+                    value={formData.rating}
+                    name="rating"
+                    onChange={handleRatingChange}
                   />
                 </div>
 
@@ -175,10 +288,10 @@ const EditProductPage = () => {
                     id="price"
                     type="text"
                     name="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
                     placeholder="Harga"
                     className="form-control"
+                    value={formData.price}
+                    onChange={handlePriceChange}
                   />
                 </div>
                 <label htmlFor="countInStock">Jumlah Stok: </label>
@@ -187,10 +300,10 @@ const EditProductPage = () => {
                     id="countInStock"
                     type="text"
                     name="countInStock"
-                    onChange={(e) => setCountInStock(e.target.value)}
-                    value={countInStock}
                     placeholder="Jumlah Stok"
                     className="form-control"
+                    value={formData.countInStock}
+                    onChange={handleCountInStockChange}
                   />
                 </div>
 

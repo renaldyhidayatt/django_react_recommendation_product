@@ -7,11 +7,11 @@ from .views import (
     ExportCSVOrderItems,
     OrderCreatePlaceOrderView,
     ExportCSVShippingAddress,
-    GetOrderView
+    GetOrderView,
 )
 
 urlpatterns = [
-    path('', GetOrderView.as_view(),name="get-orders"),
+    path("", GetOrderView.as_view(), name="get-orders"),
     path(
         "create-order-place",
         OrderCreatePlaceOrderView.as_view(),
@@ -19,7 +19,7 @@ urlpatterns = [
     ),
     path("get-order-by-id/<int:id>", GetOrderById.as_view(), name="get-order-by-id"),
     path(
-        "get-order-by-user/<int:user_id>",
+        "get-order-by-user",
         GetOrderByUserId.as_view(),
         name="get-order-by-user",
     ),

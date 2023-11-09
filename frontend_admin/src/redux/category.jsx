@@ -5,7 +5,7 @@ export const fetchAllCategories = createAsyncThunk(
   'categories/fetchAll',
   async (_, { getState, rejectWithValue }) => {
     try {
-      const { accessToken } = getState().authReducer;
+      const { accessToken } = getState().loginReducer;
       const response = await myApi.get('/category', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -23,7 +23,7 @@ export const fetchCategoryById = createAsyncThunk(
   'categories/fetchById',
   async (id, { getState, rejectWithValue }) => {
     try {
-      const { accessToken } = getState().authReducer;
+      const { accessToken } = getState().loginReducer;
       const response = await myApi.get(`/category/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -39,9 +39,9 @@ export const fetchCategoryById = createAsyncThunk(
 
 export const createCategory = createAsyncThunk(
   'categories/create',
-  async (createCategory, { rejectWithValue }) => {
+  async (createCategory, { getState, rejectWithValue }) => {
     try {
-      const { accessToken } = getState().authReducer;
+      const { accessToken } = getState().loginReducer;
       const response = await myApi.post('/category/create', createCategory, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -59,11 +59,11 @@ export const updateCategoryById = createAsyncThunk(
   'categories/updateById',
   async ({ id, formData }, { rejectWithValue, getState }) => {
     try {
-      const { accessToken } = getState().authReducer;
+      const { accessToken } = getState().loginReducer;
       const response = await myApi.put(`/category/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${accessToken}`, // Include the bearer token
+          Authorization: `Bearer ${accessToken}`,
         },
       });
       return response.data;
@@ -77,7 +77,7 @@ export const deleteCategoryById = createAsyncThunk(
   'categories/deleteById',
   async (id, { rejectWithValue, getState }) => {
     try {
-      const { accessToken } = getState().authReducer;
+      const { accessToken } = getState().loginReducer;
       const response = await myApi.delete(`/category/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,

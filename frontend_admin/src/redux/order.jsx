@@ -5,7 +5,7 @@ export const fetchOrdersAsync = createAsyncThunk(
   'order/fetchOrders',
   async (_, { rejectWithValue, getState }) => {
     try {
-      const { accessToken } = getState().authReducer; // Replace with your actual auth reducer key
+      const { accessToken } = getState().loginReducer; // Replace with your actual auth reducer key
       const response = await myApi.get('/order', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -24,7 +24,7 @@ export const deleteOrderAsync = createAsyncThunk(
   'order/deleteOrder',
   async (orderId, { rejectWithValue, getState }) => {
     try {
-      const { accessToken } = getState().authReducer; // Replace with your actual auth reducer key
+      const { accessToken } = getState().loginReducer; // Replace with your actual auth reducer key
       const response = await myApi.delete(`/order/delete/${orderId}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,

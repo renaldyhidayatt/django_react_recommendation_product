@@ -77,8 +77,29 @@ export const updateTokenAsync = createAsyncThunk(
   }
 );
 
-const authSlice = createSlice({
-  name: 'auth',
+export const registerSlice = createSlice({
+  name: 'register',
+  initialState: { loading: false, success: false, error: null },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerAction.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerAction.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+      })
+      .addCase(registerAction.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
+});
+
+export const loginSlice = createSlice({
+  name: 'login',
   initialState: {
     user: initialUser,
     accessToken: accessToken,
@@ -116,24 +137,14 @@ const authSlice = createSlice({
       .addCase(loginAction.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      })
-      .addCase(registerAction.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(registerAction.fulfilled, (state, action) => {
-        state.loading = false;
-        state.token = action.payload.token;
-        state.user = action.payload.user;
-      })
-      .addCase(registerAction.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
       });
   },
 });
 
 export const { setUser, setAuthTokens, setLoading, clearAuthData } =
-  authSlice.actions;
+  loginSlice.actions;
 
-export default authSlice.reducer;
+export default {
+  loginSlice: loginSlice.reducer,
+  registerSlice: registerSlice.reducer,
+};

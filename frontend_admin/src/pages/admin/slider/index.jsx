@@ -14,13 +14,20 @@ const SliderPage = () => {
   const dispatch = useDispatch();
 
   const handleDeleteSlider = (id) => {
-    dispatch(deleteSliderById(id))
-      .then(() => {
-        SweetAlert.success('Success', 'Item Remove Slider');
-      })
-      .catch(() => {
-        SweetAlert.error('Error', 'Failed to remove item from Slider');
-      });
+    const confirmed = window.confirm(
+      'Apakah Anda yakin ingin menghapus rekaman ini?'
+    );
+    if (confirmed) {
+      dispatch(deleteSliderById(id))
+        .then(() => {
+          SweetAlert.success('Success', 'Slider berhasil dihapus');
+
+          dispatch(fetchAllSliders());
+        })
+        .catch(() => {
+          SweetAlert.error('Error', 'Failed to remove item from Slider');
+        });
+    }
   };
 
   useEffect(() => {
@@ -117,9 +124,7 @@ const SliderPage = () => {
                           Edit
                         </Link>
                         <button
-                          onClick={() => {
-                            handleDeleteSlider(row.id);
-                          }}
+                          onClick={() => handleDeleteSlider(row.id)}
                           className="btn btn-danger"
                         >
                           Delete

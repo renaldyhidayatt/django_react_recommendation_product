@@ -5,7 +5,7 @@ export const fetchAllProducts = createAsyncThunk(
   'products/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await myApi.get('/product');
+      const response = await myApi.get('/product/');
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -17,7 +17,7 @@ export const fetchProductById = createAsyncThunk(
   'products/fetchById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await myApi.get(`/product/${id}`);
+      const response = await myApi.get(`/product/byid/${id}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -27,10 +27,14 @@ export const fetchProductById = createAsyncThunk(
 
 export const createProduct = createAsyncThunk(
   'products/create',
-  async (formData, { rejectWithValue }) => {
+  async (formData, { getState, rejectWithValue }) => {
     try {
+      const { accessToken } = getState().loginReducer;
       const response = await myApi.post('/product/create', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
       return response.data;
     } catch (error) {
@@ -41,9 +45,15 @@ export const createProduct = createAsyncThunk(
 
 export const updateProductById = createAsyncThunk(
   'products/updateById',
-  async ({ id, formData }, { rejectWithValue }) => {
+  async ({ id, form }, { getState, rejectWithValue }) => {
     try {
-      const response = await myApi.put(`/product/${id}`, formData);
+      const { accessToken } = getState().loginReducer;
+      const response = await myApi.put(`/product/update/${id}`, form, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -51,14 +61,30 @@ export const updateProductById = createAsyncThunk(
   }
 );
 
-export const deleteProductById = createAsyncThunk(
+export const deleteProduct = createAsyncThunk(
   'products/deleteById',
-  async (id, { rejectWithValue }) => {
+  async (id, { rejectWithValue, getState }) => {
     try {
-      await myApi.delete(`/product/${id}`);
-      return id;
+      const { accessToken } = getState().loginReducer;
+      const response = await myApi.delete(`/product/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      if (error.response && error.response.status === 404) {
+        // Produk tidak ada
+        return rejectWithValue('Produk tidak ada');
+      } else if (error.response && error.response.status === 403) {
+        // Anda tidak memiliki izin untuk menghapus produk tersebut
+        return rejectWithValue(
+          'Anda tidak memiliki izin untuk menghapus produk tersebut'
+        );
+      } else {
+        // Ada kesalahan lain
+        return rejectWithValue('Gagal menghapus produk');
+      }
     }
   }
 );
@@ -120,7 +146,7 @@ const productsSlice = createSlice({
       .addCase(updateProductById.fulfilled, (state, action) => {
         state.loading = false;
         const productIndex = state.products.findIndex(
-          (product) => product.product_id === action.payload.product_id
+          (product) => product.id === action.payload.id
         );
         if (productIndex !== -1) {
           state.products[productIndex] = action.payload;
@@ -130,17 +156,17 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(deleteProductById.pending, (state) => {
+      .addCase(deleteProduct.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(deleteProductById.fulfilled, (state, action) => {
+      .addCase(deleteProduct.fulfilled, (state, action) => {
         state.loading = false;
         state.products = state.products.filter(
-          (product) => product.product_id !== action.payload
+          (product) => product.id !== action.payload
         );
       })
-      .addCase(deleteProductById.rejected, (state, action) => {
+      .addCase(deleteProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

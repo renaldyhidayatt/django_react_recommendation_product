@@ -6,6 +6,7 @@ from .models import User
 
 from .serializers import UserSerializer
 
+
 class UserList(APIView):
     def get(self, request):
         users = User.objects.all()
@@ -18,6 +19,7 @@ class UserList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserDetail(APIView):
     def get_object(self, pk):

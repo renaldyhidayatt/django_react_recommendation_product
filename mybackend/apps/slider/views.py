@@ -12,6 +12,8 @@ class SliderList(APIView):
         serializer = SliderSerializer(sliders, many=True)
         return Response(serializer.data)
 
+
+class SliderCreate(APIView):
     def post(self, request):
         serializer = SliderSerializer(data=request.data)
         if serializer.is_valid():

@@ -9,7 +9,7 @@ class RecomProductListView(APIView):
     def get(self, request):
         try:
             with open("recommended_products.pkl", "rb") as file:
-                loaded_recommended_products = pickle.load(file)[:10]
+                loaded_recommended_products = pickle.load(file)[:12]
 
             loaded_recommended_products_list = loaded_recommended_products.to_dict(
                 orient="records"

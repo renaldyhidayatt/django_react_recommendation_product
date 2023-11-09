@@ -5,7 +5,7 @@ export const fetchCartItems = createAsyncThunk(
     'cart/fetchCartItems',
     async (_, { rejectWithValue, getState }) => {
         try {
-            const accessToken = getState().authReducer.accessToken;
+            const accessToken = getState().loginReducer.accessToken;
 
 
             if (!accessToken) {
@@ -32,7 +32,7 @@ export const addToCart = createAsyncThunk(
     'cart/addToCart',
     async (cartDto, { rejectWithValue, getState }) => {
         try {
-            const authTokens = getState().authReducer.accessToken;
+            const authTokens = getState().loginReducer.accessToken;
 
             const response = await myApi.post('/cart/create', cartDto, {
                 headers: {
@@ -51,7 +51,7 @@ export const removeFromCart = createAsyncThunk(
     'cart/removeFromCart',
     async (cartId, { rejectWithValue, getState }) => {
         try {
-            const accessToken = getState().authReducer.accessToken;
+            const accessToken = getState().loginReducer.accessToken;
 
 
             if (!accessToken) {
@@ -76,7 +76,7 @@ export const deleteManyFromCart = createAsyncThunk(
     'cart/deleteManyFromCart',
     async (cartIds, { rejectWithValue, getState }) => {
         try {
-            const accessToken = getState().authReducer.accessToken;
+            const accessToken = getState().loginReducer.accessToken;
 
 
             if (!accessToken) {

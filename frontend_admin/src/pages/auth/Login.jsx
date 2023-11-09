@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginAction } from '@/redux/auth';
 import { Link, useNavigate } from 'react-router-dom';
+import { SweetAlert } from '@/helpers';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,9 +28,17 @@ export default function LoginPage() {
 
     dispatch(loginAction(login))
       .then((data) => {
-        navigate('/admin')
+        SweetAlert.success(
+          'Login Berhasil',
+          'Anda berhasil masuk ke akun Anda.'
+        );
+        navigate('/admin');
       })
       .catch((error) => {
+        SweetAlert.error(
+          'Login Gagal',
+          'Terjadi kesalahan saat mencoba masuk. Silakan cek kembali email dan kata sandi Anda.'
+        );
         console.log('Login error:', error);
       });
   };

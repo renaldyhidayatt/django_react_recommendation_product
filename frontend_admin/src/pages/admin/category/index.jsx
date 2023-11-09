@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCategoryById, fetchAllCategories } from '@/redux/category';
 import { SweetAlert } from '@/helpers';
@@ -6,14 +6,22 @@ import { Link } from 'react-router-dom';
 
 const CategoryPage = () => {
   const category = useSelector((state) => state.categoryReducer);
-
   const { error, loading, categories } = category;
-
   const dispatch = useDispatch();
+
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filteredCategories, setFilteredCategories] = useState([]);
 
   useEffect(() => {
     dispatch(fetchAllCategories());
   }, []);
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setFilteredCategories(categories.slice(startIndex, endIndex));
+  }, [currentPage, categories]);
 
   const handleDelete = (id) => {
     dispatch(deleteCategoryById(id))
@@ -90,13 +98,13 @@ const CategoryPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {categories.map((row) => (
+                {filteredCategories.map((row, index) => (
                   <tr key={row.id}>
-                    <td>{row.id}</td>
+                    <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                     <td>{row.name}</td>
                     <td>
                       <img
-                        src={`${row.image_category}`}
+                        src={row.image_category}
                         alt="Current Image"
                         width={100}
                         height={100}
@@ -120,6 +128,38 @@ const CategoryPage = () => {
                 ))}
               </tbody>
             </table>
+
+            <nav aria-label="Page navigation example">
+              <ul className="pagination pagination-primary">
+                <li
+                  className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}
+                >
+                  <span
+                    className="page-link"
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                  >
+                    Previous
+                  </span>
+                </li>
+                <li className="page-item">
+                  <span className="page-link active">Page {currentPage}</span>
+                </li>
+                <li
+                  className={`page-item ${
+                    currentPage * itemsPerPage >= categories.length
+                      ? 'disabled'
+                      : ''
+                  }`}
+                >
+                  <span
+                    className="page-link"
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                  >
+                    Next
+                  </span>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
       </section>

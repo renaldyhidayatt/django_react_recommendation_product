@@ -1,6 +1,8 @@
-import { deleteProductById, fetchAllProducts } from '@/redux/product';
-import React, { useEffect } from 'react';
+import { SweetAlert } from '@/helpers';
+import { deleteProduct, fetchAllProducts } from '@/redux/product';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const ProductPage = () => {
   const product = useSelector((state) => state.productReducer);
@@ -8,14 +10,30 @@ const ProductPage = () => {
   const dispatch = useDispatch();
   const { products, loading, error } = product;
 
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
   useEffect(() => {
     dispatch(fetchAllProducts());
   }, []);
 
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setFilteredProducts(products.slice(startIndex, endIndex));
+  }, [currentPage, products]);
+
   const handleDeleteProduct = (id) => {
-    if (window.confirm('Are you sure you want to delete this record?')) {
-      dispatch(deleteProductById(id));
-    }
+    dispatch(deleteProduct(id))
+      .then(() => {
+        SweetAlert.success('Success', 'Produk berhasil dihapus');
+
+        dispatch(fetchAllProducts());
+      })
+      .catch(() => {
+        SweetAlert.error('Error', 'Failed to remove item from Category');
+      });
   };
 
   return (
@@ -72,47 +90,75 @@ const ProductPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {products &&
-                  products.map((row) => (
-                    <tr key={row.id}>
-                      <td>{row.id}</td>
-                      <td>{row.name}</td>
-                      <td>{row.brand}</td>
-                      <td>
-                        <img
-                          src={row.image_product}
-                          alt="Current Image"
-                          width={100}
-                          height={100}
-                        />
-                      </td>
-                      <td>{row.category}</td>
-                      <td>{row.description}</td>
+                {filteredProducts.map((row, index) => (
+                  <tr key={row.id}>
+                    <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                    <td>{row.name}</td>
+                    <td>{row.brand}</td>
+                    <td>
+                      <img
+                        src={row.image_product}
+                        alt="Current Image"
+                        width={100}
+                        height={100}
+                      />
+                    </td>
+                    <td>{row.category}</td>
+                    <td>{row.description}</td>
 
-                      <td>{row.price}</td>
-                      <td>{row.countInStock}</td>
-                      <td>{row.created_at}</td>
-                      <td>{row.updated_at}</td>
-                      <td width="250">
-                        <a
-                          href={`/admin/product/edit/${row.id}`}
-                          className="btn btn-success"
-                        >
-                          Edit
-                        </a>
-                        <button
-                          onClick={() => {
-                            handleDeleteProduct(row.id);
-                          }}
-                          className="btn btn-danger"
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                    <td>{row.price}</td>
+                    <td>{row.countInStock}</td>
+                    <td>{row.created_at}</td>
+                    <td>{row.updated_at}</td>
+                    <td width="250">
+                      <Link
+                        to={`/admin/product/edit/${row.id}`}
+                        className="btn btn-success"
+                      >
+                        Edit
+                      </Link>
+                      <button
+                        onClick={() => handleDeleteProduct(row.id)}
+                        className="btn btn-danger"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
+            <nav aria-label="Page navigation example">
+              <ul className="pagination pagination-primary">
+                <li
+                  className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}
+                >
+                  <span
+                    className="page-link"
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                  >
+                    Previous
+                  </span>
+                </li>
+                <li className="page-item">
+                  <span className="page-link active">Page {currentPage}</span>
+                </li>
+                <li
+                  className={`page-item ${
+                    currentPage * itemsPerPage >= products.length
+                      ? 'disabled'
+                      : ''
+                  }`}
+                >
+                  <span
+                    className="page-link"
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                  >
+                    Next
+                  </span>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
       </section>

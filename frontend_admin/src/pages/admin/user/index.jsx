@@ -1,12 +1,16 @@
 import { SweetAlert } from '@/helpers';
 import { deleteUserById, fetchUsers } from '@/redux/user';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const UserPage = () => {
   const myuser = useSelector((state) => state.userReducer);
 
   const { users, loading, error } = myuser;
+
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -18,14 +22,22 @@ const UserPage = () => {
       });
   }, [dispatch]);
 
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setFilteredUsers(users.slice(startIndex, endIndex));
+  }, [currentPage, users]);
+
   const handleDeleteUser = (userId) => {
-    dispatch(deleteUserById(id))
-      .then(() => {
-        SweetAlert.success('Success', 'Item Remove Category');
-      })
-      .catch(() => {
-        SweetAlert.error('Error', 'Failed to remove item from Category');
-      });
+    if (window.confirm('Are you sure you want to delete this record?')) {
+      dispatch(deleteUserById(id))
+        .then(() => {
+          SweetAlert.success('Success', 'Item Remove Category');
+        })
+        .catch(() => {
+          SweetAlert.error('Error', 'Failed to remove item from Category');
+        });
+    }
   };
 
   if (loading) {
@@ -93,9 +105,9 @@ const UserPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
+                {filteredUsers.map((user, index) => (
                   <tr key={user.id}>
-                    <td>{user.id}</td>
+                    <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.created_at}</td>
@@ -118,6 +130,35 @@ const UserPage = () => {
                 ))}
               </tbody>
             </table>
+            <nav aria-label="Page navigation example">
+              <ul className="pagination pagination-primary">
+                <li
+                  className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}
+                >
+                  <span
+                    className="page-link"
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                  >
+                    Previous
+                  </span>
+                </li>
+                <li className="page-item">
+                  <span className="page-link active">Page {currentPage}</span>
+                </li>
+                <li
+                  className={`page-item ${
+                    currentPage * itemsPerPage >= users.length ? 'disabled' : ''
+                  }`}
+                >
+                  <span
+                    className="page-link"
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                  >
+                    Next
+                  </span>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
       </section>

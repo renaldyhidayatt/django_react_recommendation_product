@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authSlice from './auth';
+import { registerSlice, loginSlice } from './auth';
 import categorySlice from './category';
 import userSlice from './user';
 import productSlice from './product';
@@ -8,7 +8,8 @@ import orderSlice from './order';
 
 const store = configureStore({
   reducer: {
-    authReducer: authSlice,
+    registerReducer: registerSlice.reducer,
+    loginReducer: loginSlice.reducer,
     categoryReducer: categorySlice,
     productReducer: productSlice,
     sliderReducer: sliderSlice,

@@ -13,3 +13,20 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = "__all__"
+
+
+# class ProductSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Product
+#         fields = [
+#             "id",
+#             "name",
+#             "category",
+#             "description",
+#             "price",
+#             "countInStock",
+#             "brand",
+#             "rating",
+#             "weight",
+#             "slug_product",
+#         ]

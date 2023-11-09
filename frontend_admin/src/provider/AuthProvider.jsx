@@ -6,8 +6,8 @@ import { Navigate } from 'react-router-dom';
 const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
 
-  const refreshToken = useSelector((state) => state.authReducer.refreshToken);
-  const loading = useSelector((state) => state.authReducer.loading);
+  const refreshToken = useSelector((state) => state.loginReducer.refreshToken);
+  const loading = useSelector((state) => state.loginReducer.loading);
 
   if (!refreshToken) {
     return <Navigate to={'/'} />;

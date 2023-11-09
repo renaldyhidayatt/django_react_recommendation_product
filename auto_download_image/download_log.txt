@@ -1,0 +1,41 @@
+2023/10/10 18:01:53 Gagal mengunduh gambar: Get "image": unsupported protocol scheme ""
+2023/10/10 18:01:53 Unduhan berhasil: Chino_Pants_Erigo.jpg
+2023/10/10 18:01:53 Unduhan berhasil: Erigo_Coach_Jacket_Fujinkai_Black_Unisex.jpg
+2023/10/10 18:01:53 Unduhan berhasil: Erigo_T-Shirt_Kuina_Navy_Unisex.jpg
+2023/10/10 18:01:53 Unduhan berhasil: Erigo_Chino_Pants_Beryl_Emerald_Unisex.jpg
+2023/10/10 18:01:54 Unduhan berhasil: Erigo_Jogger_Pants_Jessie_Black.jpg
+2023/10/10 18:01:54 Unduhan berhasil: ROBOT_-_Mousepad_Anti_Slip_RP05_Gaming_Polos_Hitam_Murah_Rubber_Original.jpg
+2023/10/10 18:01:54 Unduhan berhasil: Mouse_Wireless_ROBOT_M205_2.4G_1600DPI_Receiver_USB_untuk_PC_Laptop-Garansi_Resmi_1_Tahun.jpg
+2023/10/10 18:01:55 Unduhan berhasil: ROBOT_Portable_Mini_Wireless_Set_Combo_Keyboard_and_Mouse_KM3100_Original_Garansi_1_Tahun.jpg
+2023/10/10 18:01:55 Unduhan berhasil: Robot_TWS_Wireless_Earphone_Airbuds_T30_PLUS_Original_BT_5.3_Original_Garansi_1_Tahun.jpg
+2023/10/10 18:01:55 Unduhan berhasil: ROBOT_Stand_Holder_Laptop_Portable_Lipat_Anti_Slip_Kompatibel_dengan_Semua_Jenis_Laptop_dan_Tablet_RT-LS03_Original.jpg
+2023/10/10 18:01:55 Unduhan berhasil: SanDisk_CZ50_Cruzer_Blade_USB_2.0_-_8_GB.jpg
+2023/10/10 18:01:55 Gagal mengunduh gambar: open assets/SanDisk_Max_Endurance_128GB_100MB/s_MicroSDXC_-_4K_Ultra_HD.jpg: no such file or directory
+2023/10/10 18:01:55 Gagal mengunduh gambar: open assets/SanDisk_SSD_PLUS_Solid_240GB_SPEED_UP/TO_530MB/S.jpg: no such file or directory
+2023/10/10 18:01:55 Gagal mengunduh gambar: open assets/SANDISK_FLASHDISK_128GB_/_USB_FLASH_128GB_/_SANDISK_BLADE_CZ50_128GB.jpg: no such file or directory
+2023/10/10 18:01:55 Unduhan berhasil: Sandisk_Ultra_Micro_SDXC_UHS_I_A1_140Mbps_128GB_Micro_Sd_Card_Class_10_-_QUAB.jpg
+2023/10/10 18:01:56 Unduhan berhasil: TEAMGROUP_SSD_M2_SATA_2280_MS30_2TB_(_2000GB_).jpg
+2023/10/10 18:01:56 Unduhan berhasil: TEAMGROUP_SSD_2.5_CX2_Series_256GB_Sata3.jpg
+2023/10/10 18:01:56 Unduhan berhasil: TEAMGROUP_SSD_2.5_GX2_128GB_Grey.jpg
+2023/10/10 18:01:56 Unduhan berhasil: Teamgroup_Elite_Plus_Memory_DDR4_4GB_PC_2666Mhz_(_21300_)_Black.jpg
+2023/10/10 18:01:56 Gagal mengunduh gambar: open assets/Teamgroup_SSD_TEAM_MP33_256GB_M.2_NVMe_(1800MB/s).jpg: no such file or directory
+2023/10/10 18:01:57 Unduhan berhasil: GM_Bear_Panci_Listrik_Fry_Pan_Electric_(2in1)_1692_-_Panci_Penggorengan_Keramik_Elektrik_Free_Steamer.jpg
+2023/10/10 18:01:57 Unduhan berhasil: GM_Bear_Spatula_Set_isi_6psc_1073_-_Utensil_Spatula_Sutil_Set.jpg
+2023/10/10 18:01:58 Unduhan berhasil: GM_Bear_Wajan_16cm_1072_-_Fry_Pan_Penggorengan_Mini.jpg
+2023/10/10 18:01:58 Unduhan berhasil: GM_Bear_Organizer_Rak_Multifungsi_P0177_-_Organizer_Storage_Shelves_Space_Efficient_Drawer.jpg
+2023/10/10 18:01:58 Unduhan berhasil: GM_Bear_Alat_Pemanggang_Daging_Hotpot_Elektrik_(2_in_1)_1247_-_Denki_BBQ_Grill_Pan_Steamboat_Electric.jpg
+2023/10/10 18:01:59 Unduhan berhasil: Rinnai_Kompor_Gas_3_Tungku_RI_524_E.jpg
+2023/10/10 18:01:59 Gagal mengunduh gambar: open assets/Rinnai_Kompor_Gas_1_Tungku_RI_TL_289_/_TL289.jpg: no such file or directory
+2023/10/10 18:01:59 Gagal mengunduh gambar: open assets/Rinnai_Sparepart_Burner_Head_Tornado_Kompor_Seri_5/6/7.jpg: no such file or directory
+2023/10/10 18:01:59 Gagal mengunduh gambar: open assets/Rinnai_Kompor_Gas_1_Tungku_RI_301S_/_301S.jpg: no such file or directory
+2023/10/10 18:01:59 Gagal mengunduh gambar: open assets/Rinnai_Kompor_Gas_2_Tungku_RI_2_RSP_/_2_RSP.jpg: no such file or directory
+2023/10/10 18:02:00 Unduhan berhasil: Xiaomi_TV_A2_43_[FHD]_Smart_HD_Dolby_Audio�_Android_TV�_Google_Play_Netflix_Disney+.jpg
+2023/10/10 18:02:00 Unduhan berhasil: Xiaomi_Redmi_Buds_4_Active_-_Bluetooth®_5.3_IPX4_Baterai_Hingga_28_Jam_Koneksi_Mudah.jpg
+2023/10/10 18:02:00 Gagal mengunduh gambar: open assets/Xiaomi_POCO_X5_Pro_5G_(6GB/128GB)_|_(8GB/256GB)_Snapdragon_778G_5G_120Hz_AMOLED_67W_108MP_NFC.jpg: no such file or directory
+2023/10/10 18:02:00 Gagal mengunduh gambar: open assets/Xiaomi_TV_Box_S_(2nd_Gen)_4K_Ultra_HD_Streaming_Media_Player,_Google_TV_Box_with_2GB_RAM_8GB_ROM,_2.4G/5G_Dual_WiFi,_Bluetooth_5.2_&_Dolby_Audio_and_DTS-HD,_Dolby_Vision,_HDR10+.jpg: no such file or directory
+2023/10/10 18:02:00 Gagal mengunduh gambar: open assets/Xiaomi_POCO_M5_(4/64GB)_|_(4/128GB)_Helio_G99_50MP_AI_Triple_Kamera_Layar_90Hz_FHD+_6,58”_5000mAh_NFC.jpg: no such file or directory
+2023/10/10 18:02:00 Unduhan berhasil: BARDI_Smart_Indoor_PTZ_IP_Camera_CCTV_Wifi_IoT_Home_Automation_+_Micro_SD.jpg
+2023/10/10 18:02:01 Unduhan berhasil: BARDI_Smart_LIGHT_BULB_RGBWW_12W_Wifi_Wireless_IoT_-_Home_Automation_(Lampu_Tidur_Kekinian).jpg
+2023/10/10 18:02:01 Unduhan berhasil: BARDI_Smart_UNIVERSAL_IR_REMOTE_12M_Wifi_Wireless_IoT_For_Home_Automation.jpg
+2023/10/10 18:02:01 Unduhan berhasil: BARDI_Bundling_Smart_IP_Camera_CCTV_Outdoor_PTZ_+_Micro_SD.jpg
+2023/10/10 18:02:02 Unduhan berhasil: BARDI_Dual_Smart_Plug.jpg

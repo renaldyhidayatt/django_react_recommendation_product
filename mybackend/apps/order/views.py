@@ -7,7 +7,6 @@ from rest_framework import status
 from uuid import uuid4
 from .serializers import (
     OrderSerializer,
-    OrderItemsSerializer,
     OrderCreatePlaceOrderSerializer,
 )
 from apps.user.models import User
@@ -18,14 +17,13 @@ from .models import Order, OrderItems, ShippingAddress
 
 
 class GetOrderView(APIView):
-    # permission_classes = (IsAuthenticated,)
-
     def get(self, request):
-        orders = Order.objects.all()
+        orders = Order.objects.all()[:10]
 
         serializer = OrderSerializer(orders, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class OrderCreatePlaceOrderView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -37,9 +35,7 @@ class OrderCreatePlaceOrderView(APIView):
 
             try:
                 current_user = request.user
-                # user = User.objects.get(id=current_user.id)
 
-                # Create the order without saving it yet
                 order_create = Order(
                     user=current_user,
                     name=validated_data["name"],
@@ -50,10 +46,9 @@ class OrderCreatePlaceOrderView(APIView):
                     shippingCost=validated_data["shippingCost"],
                     totalProduct=validated_data["totalProduct"],
                     totalPrice=validated_data["totalPrice"],
-                    transactionId=str(uuid4()),  # Convert to string
+                    transactionId=str(uuid4()),
                 )
 
-                # Save the order
                 order_create.save()
 
                 shipping_address = ShippingAddress.objects.create(

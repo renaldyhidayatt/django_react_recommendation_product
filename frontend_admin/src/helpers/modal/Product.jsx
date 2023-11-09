@@ -10,6 +10,9 @@ const ModalProduct = (props) => {
     categoryId: '',
     description: '',
     price: '',
+    brand: '',
+    weight: '',
+    rating: '',
     countInStock: '',
   });
 
@@ -53,6 +56,27 @@ const ModalProduct = (props) => {
     });
   };
 
+  const handleBrandChange = (e) => {
+    setFormData({
+      ...formData,
+      brand: e.target.value,
+    });
+  };
+
+  const handleWeightChange = (e) => {
+    setFormData({
+      ...formData,
+      weight: e.target.value,
+    });
+  };
+
+  const handleRatingChange = (e) => {
+    setFormData({
+      ...formData,
+      rating: e.target.value,
+    });
+  };
+
   const handleCountInStockChange = (e) => {
     setFormData({
       ...formData,
@@ -71,8 +95,11 @@ const ModalProduct = (props) => {
     form.append('name', formData.name);
     form.append('category', formData.categoryId);
     form.append('description', formData.description);
-    form.append('price', formData.price);
     form.append('countInStock', formData.countInStock);
+    form.append('brand', formData.brand);
+    form.append('weight', formData.weight);
+    form.append('rating', formData.rating);
+    form.append('price', formData.price);
     if (formData.image) {
       form.append('image_product', formData.image);
     }
@@ -159,6 +186,41 @@ const ModalProduct = (props) => {
                   onChange={handleDescriptionChange}
                 />
               </div>
+              <label htmlFor="brand">Brand: </label>
+              <div className="form-group">
+                <input
+                  type="text"
+                  placeholder="Brand"
+                  className="form-control"
+                  id="brand"
+                  name="brand"
+                  onChange={handleBrandChange}
+                />
+              </div>
+              <label htmlFor="weight">Weight: </label>
+              <div className="form-group">
+                <input
+                  type="text"
+                  placeholder="Weight"
+                  className="form-control"
+                  id="weight"
+                  name="weight"
+                  onChange={handleWeightChange}
+                />
+              </div>
+
+              <label htmlFor="rating">Rating: </label>
+              <div className="form-group">
+                <input
+                  type="text"
+                  placeholder="Rating"
+                  className="form-control"
+                  id="rating"
+                  name="rating"
+                  onChange={handleRatingChange}
+                />
+              </div>
+
               <label htmlFor="price">Harga: </label>
               <div className="form-group">
                 <input
