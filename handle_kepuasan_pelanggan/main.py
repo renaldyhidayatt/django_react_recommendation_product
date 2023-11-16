@@ -12,43 +12,42 @@ response = requests.get(url)
 st.title('Perhitungan Manfaat SIREKOM')
 
 
-st.header('Peningkatan Konversi Penjualan')
-st.write('Bandingkan jumlah penjualan sebelum dan setelah implementasi. Hitung persentase kenaikan penjualan.')
+st.header('Grafik Pendapatan per Bulan')
+st.write("Grafik ini menunjukkan total pendapatan per bulan dari data penjualan yang telah diolah.")
 
-if response.status_code == 200:
-    data = response.json()
 
-   
-    df_pendapatan = pd.DataFrame({
-        'Bulan': pd.date_range(start='2023-01-01', periods=12, freq='M'),
-        'Pendapatan': data["data"]["pendapatan"]
-    })
-   
- 
-    plt.figure(figsize=(10, 6))
-    plt.plot(df_pendapatan['Bulan'], df_pendapatan['Pendapatan'])
-    plt.xlabel('Bulan')
-    plt.ylabel('Pendapatan')
-    plt.title('Grafik Pendapatan')
-    plt.xticks(rotation=45)
-    plt.grid(True)
+df_order = pd.read_csv('./dataset/modified_order.csv')
 
-   
-    st.pyplot(plt)
-else:
-    st.write(f"Failed to retrieve data. Status code: {response.status_code}")
+
+df_order['created_at'] = pd.to_datetime(df_order['created_at'])
+
+
+df_monthly_sales = df_order.groupby(df_order['created_at'].dt.strftime('%B')).agg({'totalPrice': 'sum'}).reset_index()
+
+plt.figure(figsize=(10, 6))
+plt.plot(df_monthly_sales['created_at'], df_monthly_sales['totalPrice'], marker='o', linestyle='-')
+plt.xlabel('Bulan')
+plt.ylabel('Pendapatan')
+plt.title('Grafik Pendapatan per Bulan')
+plt.xticks(rotation=45)
+plt.grid(True)
+
+st.pyplot(plt)
+
 
 
 df_kepuasan = pd.read_csv('./dataset/kepuasaan.csv')
 
 
 st.header('Kepuasan Pengguna')
+st.write("Diagram batang ini memvisualisasikan tingkat kepuasan pengguna dari dataset kepuasaan yang telah tersedia.")
+
 st.bar_chart(df_kepuasan.set_index('status_kepuasan')['persentase'])
 
 
 
 st.header('Pertumbuhan Triwulan')
-df_order = pd.read_csv('./dataset/modified_order.csv')
+st.write("Grafik batang ini memperlihatkan jumlah transaksi per triwulan (Triwulan 1-4) dari data penjualan.")
 
 df_order['created_at'] = pd.to_datetime(df_order['created_at'])
 
@@ -76,21 +75,28 @@ st.pyplot(fig)
 
 
 
-df_brand = pd.read_csv('./dataset/brand.csv')
-
-grouped = df_brand.groupby('Brand Recognition')['Perubahan'].mean()
-
-st.header('Peningkatan Branding Platform E-commerce')
+df_orderitems = pd.read_csv('./dataset/OrderItems_with_brand.csv')
 
 
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.bar(grouped.index, grouped.values)
-ax.set_xlabel('Brand')
-ax.set_ylabel('Rata-rata Perubahan')
-ax.set_title('Peningkatan Branding Platform E-commerce')
-ax.set_xticklabels(grouped.index, rotation=45)
+fig, axs = plt.subplots(2, 1, figsize=(10, 12))
 
+axs[0].bar(df_orderitems['brand'].value_counts().index, df_orderitems['brand'].value_counts())
+axs[0].set_xlabel('Brand')
+axs[0].set_ylabel('Jumlah Produk Terjual')
+axs[0].set_title('Jumlah Produk terjual per Brand')
+axs[0].tick_params(axis='x', rotation=45)
+axs[0].grid(True)
+
+
+axs[1].pie(df_orderitems['brand'].value_counts(), labels=df_orderitems['brand'].value_counts().index, autopct='%1.1f%%')
+axs[1].set_title('Pie Chart Distribusi Brand')
+
+plt.tight_layout()
+
+st.header('Visualisasi Jumlah Produk terjual per Brand')
+st.write("Grafik batang dan pie chart ini menunjukkan jumlah produk yang terjual per brand dari dataset OrderItems.")
 st.pyplot(fig)
+
 
 
 

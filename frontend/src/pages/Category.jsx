@@ -59,7 +59,7 @@ export default function CategoryPage() {
                     <h3 className="text-lg font-semibold text-gray-800">
                       {product.name}
                     </h3>
-                    <p className="mt-1 text-gray-600">{product.description}</p>
+                 
                     <p className="mt-2 text-gray-800 font-semibold">
                       Rp. {product.price}
                     </p>

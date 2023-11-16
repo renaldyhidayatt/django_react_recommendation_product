@@ -44,6 +44,7 @@ export default function ProductPage() {
           weight: product.weight,
         })
       );
+      SweetAlert.success('Success', 'Product has been added to the cart');
     } else {
       SweetAlert.error(
         'Error',
@@ -123,6 +124,7 @@ export default function ProductPage() {
                       <button
                         className="bg-gray-800 text-white py-2 px-4 rounded-md mt-6"
                         onClick={addCart}
+                        disabled={!user}
                       >
                         Add to Cart
                       </button>

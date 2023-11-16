@@ -39,9 +39,9 @@ class ShippingAddress(TimeStampedModel):
 
 
 class OrderItems(TimeStampedModel):
-    name = models.CharField(max_length=255)
-    quantity = models.IntegerField()
-    price = models.IntegerField()
+    name = models.CharField(max_length=255, default="hello")
+    quantity = models.IntegerField(default=1)
+    price = models.IntegerField(default=1)
     order = models.ForeignKey(
         Order,
         on_delete=models.CASCADE,

@@ -12,7 +12,7 @@ export default function CartPage() {
     const error = useSelector((state) => state.cartReducer.error);
 
     const navigate = useNavigate();
-    const loginReducer = useSelector((state) => state.authReducer);
+    const loginReducer = useSelector((state) => state.loginReducer);
 
     const subtotal = calculateSubtotal(cartItems);
     const totalProducts = calculateTotalProducts(cartItems);

@@ -8,6 +8,7 @@ from import_export.admin import ImportExportModelAdmin
 @admin.register(Order)
 class OrderAdmin(ImportExportModelAdmin):
     list_display = (
+        'id',
         "name",
         "phone",
         "email",
@@ -17,13 +18,14 @@ class OrderAdmin(ImportExportModelAdmin):
         "totalProduct",
         "totalPrice",
         "transactionId",
+        'created_at',
+        'updated_at'
     )
 
 
 @admin.register(OrderItems)
 class OrderItemAdmin(ImportExportModelAdmin):
     list_display = ("name", "quantity", "price", "order")
-
 
 @admin.register(ShippingAddress)
 class ShippingAddressAdmin(ImportExportModelAdmin):

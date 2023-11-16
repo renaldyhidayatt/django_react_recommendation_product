@@ -31,7 +31,7 @@ const CheckoutForm = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false); // Added loading state
     const dispatch = useDispatch();
-    const { user, accessToken } = useSelector((state) => state.authReducer);
+    const { user, accessToken } = useSelector((state) => state.loginReducer);
 
     const cartItems = useSelector((state) => state.cartReducer.cartItems);
     const subtotal = calculateSubtotal(cartItems);
@@ -197,7 +197,7 @@ const CheckoutForm = () => {
                 },
             });
             const data = response.data;
-            const cartIds = cartItems.map((item) => item.cart_id);
+            const cartIds = cartItems.map((item) => item.id);
 
             if (data && data.token) {
                 window.snap.pay(data.token, {
@@ -339,9 +339,9 @@ const CheckoutForm = () => {
                                 value={courier}
                                 name="courier"
                             >
-                                <option value="jne">JNE</option>
-                                <option value="tiki">TIKI</option>
-                                <option value="pos">POS INDONESIA</option>
+                                <option value="JNE">JNE</option>
+                                <option value="TIKI">TIKI</option>
+                                <option value="POS">POS INDONESIA</option>
                             </select>
                         </div>
                         <div className="mb-4">

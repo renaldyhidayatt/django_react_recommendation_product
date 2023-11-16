@@ -7,7 +7,7 @@ import { IsError } from '../../components/ISError';
 
 export default function OrderPage() {
   const orderState = useSelector((state) => state.orderReducer);
-  const user = useSelector((state) => state.authReducer.user);
+  const user = useSelector((state) => state.loginReducer.user);
 
   const { orders, getOrdersByUserIdError, getOrdersByUserIdLoading } =
     orderState;

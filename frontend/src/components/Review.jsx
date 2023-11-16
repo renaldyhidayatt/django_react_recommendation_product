@@ -13,9 +13,6 @@ export default function Review({ product }) {
 
   const [comment, setComment] = useState('');
 
-  useEffect(() => {
-    console.log('user: ', user);
-  }, []);
 
   const sendReview = (e) => {
     e.preventDefault();
@@ -24,7 +21,7 @@ export default function Review({ product }) {
       let alreadyReviewed = false;
 
       for (let i = 0; i < product.reviews.length; i++) {
-        if (product.reviews[i].user === user.user_id) {
+        if (product.reviews[i].user === user.id) {
           alreadyReviewed = true;
         }
       }
@@ -40,7 +37,11 @@ export default function Review({ product }) {
           comment: comment,
         };
 
-        dispatch(addProductReview({ review: review, productid: product.id }));
+        dispatch(addProductReview({ review: review, productid: product.id })).then(() => {
+          window.location.reload();
+        })
+
+       
       }
     } else {
       <Navigate to={'/login'} />;

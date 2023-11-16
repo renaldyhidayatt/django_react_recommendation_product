@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework import status
 from uuid import uuid4
 from .serializers import (
@@ -23,6 +24,30 @@ class GetOrderView(APIView):
         serializer = OrderSerializer(orders, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class OrderImportView(APIView):
+    parser_classes = (MultiPartParser,)
+
+    def post(self, request, *args, **kwargs):
+        file_obj = request.FILES.get('file')
+        if file_obj:
+           
+            decoded_file = file_obj.read().decode('utf-8').splitlines()
+            csv_reader = csv.DictReader(decoded_file)
+            
+          
+            for row in csv_reader:
+                
+                serializer = OrderSerializer(data=row)
+                if serializer.is_valid():
+                    serializer.save()
+                else:
+                    return Response(serializer.errors, status=400)
+            
+            return Response({'detail': 'File uploaded successfully'}, status=201)
+        else:
+            return Response({'detail': 'File not found in request'}, status=400)
 
 
 class OrderCreatePlaceOrderView(APIView):

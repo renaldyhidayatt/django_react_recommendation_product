@@ -8,6 +8,7 @@ from .views import (
     OrderCreatePlaceOrderView,
     ExportCSVShippingAddress,
     GetOrderView,
+    OrderImportView
 )
 
 urlpatterns = [
@@ -34,4 +35,5 @@ urlpatterns = [
         ExportCSVShippingAddress.as_view(),
         name="export-csv-shipping-address",
     ),
+    path('import', OrderImportView.as_view(), name="import")
 ]

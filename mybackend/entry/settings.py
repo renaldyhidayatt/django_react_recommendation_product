@@ -58,7 +58,7 @@ INSTALLED_APPS = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
-APPEND_SLASH = False
+
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -144,11 +144,11 @@ WSGI_APPLICATION = "entry.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "ve70c8agundx244r",  # Nama database Anda
+        "NAME": "h3dm5jv664v24tal",  # Nama database Anda
         "HOST": "pg-csigyhvd.apsoutheast1.db.lyr.id",  # Hostname database Anda
         "PORT": "21148",  # Port database Anda
-        "USER": "t1qeq1a97d",  # Username database Anda
-        "PASSWORD": "c9vUvq5gNO6A5yfMI5wbQjXLJ3YCZuvu",  # Password database Anda
+        "USER": "wy61w793fc",  # Username database Anda
+        "PASSWORD": "ptsudoUJ5hQMAn4aQbuHxKD59uXwrE0R",  # Password database Anda
     }
 }
 

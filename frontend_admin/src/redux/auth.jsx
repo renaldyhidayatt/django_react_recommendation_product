@@ -58,7 +58,7 @@ export const updateTokenAsync = createAsyncThunk(
   'auth/updateToken',
   async (_, { getState, dispatch }) => {
     try {
-      const { refreshToken } = getState().authReducer;
+      const { refreshToken } = getState().loginReducer;
 
       if (!refreshToken) {
         return;
