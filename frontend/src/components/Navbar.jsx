@@ -2,7 +2,7 @@ import React, {  useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logoutUserAction } from '../redux/auth.slice';
-import Logo from '../assets/logo-Sirecom-03.png';
+import Logo from '../assets/tulisan_logo.png';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,7 +32,7 @@ const Navbar = () => {
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 relative">
         <a href="/" className="flex items-center">
           <span className="self-center text-2xl font-semibold whitespace-nowrap">
-            <img src={Logo} alt="Logo" style={{ height: '50px' }} />
+            <img src={Logo} alt="Logo" style={{ height: '40px' }} />
           </span>
         </a>
 

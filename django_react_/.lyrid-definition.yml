@@ -1,0 +1,12 @@
+name: py39_django
+description: App Description
+ignoreFiles: .git venv
+modules:
+- name: template
+  language: python3.9
+  web: django
+  description: Module description
+  functions:
+  - name: entry
+    entry: wsgi.py
+    description: the entry point for the function

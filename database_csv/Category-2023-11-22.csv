@@ -1,0 +1,5 @@
+id,name,description,slug_category,image_category,created_at,updated_at
+1,Fashion,fash,fashion,media/images/icon_fashion-01_a0g5p7,2023-11-15 11:24:11,2023-11-15 11:24:11
+2,komputer dan aksesoris,komputer dan aksesoris,komputer-dan-aksesoris,media/images/icon_computer_accessoris-01_axyuf9,2023-11-15 11:24:11,2023-11-15 11:24:11
+3,Alat masak,alat masak,alat-masak,media/images/kategori_alat_masak-01_kfkdnr,2023-11-15 11:24:11,2023-11-15 11:24:11
+4,Electronic,Electronic,electronic,media/images/icon_electronic-01_jbtwnl,2023-11-15 11:24:11,2023-11-15 11:24:11
