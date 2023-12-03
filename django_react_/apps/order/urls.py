@@ -8,7 +8,8 @@ from .views import (
     OrderCreatePlaceOrderView,
     ExportCSVShippingAddress,
     GetOrderView,
-    OrderImportView
+    OrderImportView,
+    DeleteOrderView
 )
 
 urlpatterns = [
@@ -35,5 +36,6 @@ urlpatterns = [
         ExportCSVShippingAddress.as_view(),
         name="export-csv-shipping-address",
     ),
-    path('import', OrderImportView.as_view(), name="import")
+    path('import', OrderImportView.as_view(), name="import"),
+    path('delete-order/<int:pk>/', DeleteOrderView.as_view(), name='delete_order'),
 ]

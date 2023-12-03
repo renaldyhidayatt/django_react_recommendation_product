@@ -43,7 +43,7 @@ class CartDeleteMany(APIView):
     permission_classes = (IsAuthenticated,)
 
     def delete(self, request):
-        cart_ids = request.data.get("cart_ids", [])
+        cart_ids = request.data.get("cartIds", [])
         user = request.user
         carts_to_delete = Cart.objects.filter(pk__in=cart_ids, user=user)
         carts_to_delete.delete()

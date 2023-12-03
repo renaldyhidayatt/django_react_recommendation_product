@@ -22,6 +22,10 @@ export default function OrderPage() {
     }
   }, [dispatch]);
 
+  if(getOrdersByUserIdLoading){
+    return <h1>Loading</h1>;
+  }
+
   return (
     <div>
       <div className="flex justify-center mt-5">
@@ -49,7 +53,7 @@ export default function OrderPage() {
                       }}
                     >
                       <td>{order.id}</td>
-                      <td>{order.orderAmount}</td>
+                      <td>{order.totalPrice}</td>
                       <td>{order.created_at.substring(0, 10)}</td>
                       <td>{order.transactionId}</td>
                       <td>

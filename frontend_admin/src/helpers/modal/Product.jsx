@@ -2,6 +2,9 @@ import { fetchAllCategories } from '@/redux/category';
 import { createProduct } from '@/redux/product';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import SweetAlert from '../sweetalert';
+import { fetchAllProducts } from '@/redux/product';
+
 
 const ModalProduct = (props) => {
   const [formData, setFormData] = useState({
@@ -104,7 +107,12 @@ const ModalProduct = (props) => {
       form.append('image_product', formData.image);
     }
 
-    dispatch(createProduct(form));
+
+    dispatch(createProduct(form)).then(() => {
+      SweetAlert.success("Successfully", "Product created successfully!").then(() => dispatch(fetchAllProducts()));
+    }).catch(() => {
+      SweetAlert.error("Error!!!", "Failed to create product. Please try again.")
+    })
   };
 
   return (

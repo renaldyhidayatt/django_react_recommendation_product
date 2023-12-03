@@ -1,8 +1,8 @@
 import { fetchCategoryById, updateCategoryById } from '@/redux/category';
-
+import { SweetAlert } from '@/helpers';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EditCategoryPage = () => {
   const { id } = useParams();
@@ -12,7 +12,10 @@ const EditCategoryPage = () => {
 
   const { category, loading, error } = categoryState;
 
+  const navigate = useNavigate();
+
   const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const [file, setFile] = useState(null);
 
   useEffect(() => {
@@ -22,6 +25,7 @@ const EditCategoryPage = () => {
   useEffect(() => {
     if (category) {
       setName(category.name);
+      setDescription(category.description)
     }
 
     console.log('kosong: ', category);
@@ -32,16 +36,21 @@ const EditCategoryPage = () => {
     const formData = new FormData();
 
     formData.append('name', name);
+    formData.append('description', description)
 
     if (file) {
       formData.append('image_category', file);
     }
 
+
     dispatch(
-      updateCategoryById({ id: parseInt(id), formData }).then((data) => {
-        navigate('/admin/category');
+      updateCategoryById({ id: parseInt(id), formData }
+    )).then((data) => {
+      SweetAlert.success('Success', 'Category berhasil diupdate').then(() => {
+        navigate("/admin/category");
+
       })
-    );
+    })
   };
 
   return (
@@ -107,6 +116,19 @@ const EditCategoryPage = () => {
                   />
                 </div>
                 <div className="mb-3">
+                  <label htmlFor="description" className="form-label">
+                    Deskripsi Kategori
+                  </label>
+                  <textarea
+                    name="description"
+                    value={description}
+                    className="form-control"
+                    id="description"
+                    onChange={(e) => setDescription(e.target.value)}
+                    required
+                  ></textarea>
+                </div>
+                <div className="mb-3">
                   <label htmlFor="image" className="form-label">
                     Gambar
                   </label>
@@ -121,22 +143,24 @@ const EditCategoryPage = () => {
                     }}
                   />
                 </div>
-                <div className="mb-3">
-                  <label htmlFor="current_image" className="form-label">
-                    Gambar Saat Ini
-                  </label>
-                  <br />
-                  {category.image_category ? (
-                    <img
-                      src={`${category.image_category}`}
-                      alt="Current Image"
-                      width={100}
-                      height={100}
-                    />
-                  ) : (
-                    <span>Tidak ada gambar</span>
-                  )}
-                </div>
+                {category && (
+                  <div className="mb-3">
+                    <label htmlFor="current_image" className="form-label">
+                      Gambar Saat Ini
+                    </label>
+                    <br />
+                    {category.image_category ? (
+                      <img
+                        src={`${category.image_category}`}
+                        alt="Current Image"
+                        width={100}
+                        height={100}
+                      />
+                    ) : (
+                      <span>Tidak ada gambar</span>
+                    )}
+                  </div>
+                )}
                 <button type="submit" className="btn btn-primary">
                   Submit
                 </button>

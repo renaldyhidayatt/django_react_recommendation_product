@@ -5,34 +5,21 @@ import { Navigate } from 'react-router-dom';
 
 const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
-
   const refreshToken = useSelector((state) => state.loginReducer.refreshToken);
-  const loading = useSelector((state) => state.loginReducer.loading);
 
   if (!refreshToken) {
-    return <Navigate to={'/login'} />;
+    return <Navigate to={'/'} />;
   }
 
   useEffect(() => {
-    if (loading) {
+    const refreshInterval = setInterval(() => {
       dispatch(updateTokenAsync());
-    }
+    }, 1000 * 60 * 4); // Panggil dispatch setiap 4 menit
 
-    const REFRESH_INTERVAL = 1000 * 60 * 4;
-    let interval = setInterval(() => {
-      if (refreshToken) {
-        dispatch(updateTokenAsync());
-      }
-    }, REFRESH_INTERVAL);
-    return () => clearInterval(interval);
-  }, [refreshToken, loading, dispatch]);
+    return () => clearInterval(refreshInterval);
+  }, [dispatch]);
 
-  return (
-    <>
-      {loading ? <h1>Loading</h1> : null}
-      {children}
-    </>
-  );
+  return refreshToken ? children : <Navigate to={'/'} />;
 };
 
 export default AuthProvider;

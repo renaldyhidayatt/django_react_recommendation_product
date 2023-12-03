@@ -69,7 +69,7 @@ export const updateTokenAsync = createAsyncThunk(
 
       const data = response.data;
 
-      localStorage.setItem('accessToken', data);
+      localStorage.setItem('accessToken', data.access);
     } catch (error) {
       throw error;
     }

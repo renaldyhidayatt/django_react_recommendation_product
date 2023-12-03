@@ -126,7 +126,9 @@ const CheckoutForm = () => {
     useEffect(() => {
         setTotal(subtotal + shippingCost);
 
-        console.log(province)
+        const cartIds = cartItems.map((item) => item.id);
+
+        console.log(cartIds)
 
     }, [shippingCost]);
 
@@ -202,13 +204,10 @@ const CheckoutForm = () => {
             if (data && data.token) {
                 window.snap.pay(data.token, {
                     onSuccess: async (result) => {
+                        dispatch(placeOrder(formDataOrder));
 
-
-
-                        dispatch(placeOrder(formDataOrder))
-                        dispatch(deleteManyFromCart(cartIds))
-                        dispatch(updateQuantity(mycartItems))
-                        navigate('/user/order')
+                        dispatch(updateQuantity(cartItems));
+                        dispatch(deleteManyFromCart(cartIds));
 
                         setLoading(false);
                     },

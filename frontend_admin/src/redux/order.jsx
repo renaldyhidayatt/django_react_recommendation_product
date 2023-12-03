@@ -25,7 +25,7 @@ export const deleteOrderAsync = createAsyncThunk(
   async (orderId, { rejectWithValue, getState }) => {
     try {
       const { accessToken } = getState().loginReducer; // Replace with your actual auth reducer key
-      const response = await myApi.delete(`/order/delete/${orderId}`, {
+      const response = await myApi.delete(`/order/delete-order/${orderId}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

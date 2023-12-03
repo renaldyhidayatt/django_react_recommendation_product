@@ -2,6 +2,7 @@ import { SweetAlert } from '@/helpers';
 import { deleteUserById, fetchUsers } from '@/redux/user';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const UserPage = () => {
   const myuser = useSelector((state) => state.userReducer);
@@ -11,6 +12,7 @@ const UserPage = () => {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const dispatch = useDispatch();
 
@@ -21,6 +23,7 @@ const UserPage = () => {
         console.log(error);
       });
   }, [dispatch]);
+
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -39,6 +42,33 @@ const UserPage = () => {
         });
     }
   };
+
+
+
+  const handleSearch = (e) => {
+    setCurrentPage(1);
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredData = users.filter((user) => {
+    return (
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+
+
+  const pageCount = Math.ceil(filteredData.length / itemsPerPage);
+  const displayedUsers = filteredData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+
+ 
+
+  const currentBlock = Math.ceil(currentPage / 5);
+
 
   if (loading) {
     return <div>Loading...</div>;
@@ -72,7 +102,7 @@ const UserPage = () => {
             >
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">
-                  <a href="index.html">Dashboard</a>
+                  <Link to="/admin/dashboard">Dashboard</Link>
                 </li>
                 <li className="breadcrumb-item active" aria-current="page"></li>
               </ol>
@@ -93,6 +123,15 @@ const UserPage = () => {
             </button>
           </div>
           <div className="card-body">
+            <div className="mb-3">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search by name or email"
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+            </div>
             <table className="table table-striped" id="table1">
               <thead>
                 <tr>
@@ -105,22 +144,22 @@ const UserPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredUsers.map((user, index) => (
-                  <tr key={user.id}>
+                {displayedUsers.map((row, index) => (
+                  <tr key={row.id}>
                     <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.created_at}</td>
-                    <td>{user.updated_at}</td>
+                    <td>{row.name}</td>
+                    <td>{row.email}</td>
+                    <td>{row.created_at}</td>
+                    <td>{row.updated_at}</td>
                     <td width={250}>
-                      <a
-                        href={`/admin/user/edit/${user.id}`}
+                      <Link
+                        to={`/admin/user/edit/${row.id}`}
                         className="btn btn-success"
                       >
                         Edit
-                      </a>
+                      </Link>
                       <button
-                        onClick={() => handleDeleteUser(user.id)}
+                        onClick={() => handleDeleteUser(row.id)}
                         className="btn btn-danger"
                       >
                         Delete
@@ -128,13 +167,12 @@ const UserPage = () => {
                     </td>
                   </tr>
                 ))}
+
               </tbody>
             </table>
             <nav aria-label="Page navigation example">
               <ul className="pagination pagination-primary">
-                <li
-                  className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}
-                >
+                <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
                   <span
                     className="page-link"
                     onClick={() => setCurrentPage(currentPage - 1)}
@@ -142,13 +180,24 @@ const UserPage = () => {
                     Previous
                   </span>
                 </li>
-                <li className="page-item">
-                  <span className="page-link active">Page {currentPage}</span>
-                </li>
+                {[...Array(pageCount > 5 ? 5 : pageCount)].map((_, index) => (
+                  <li key={index} className="page-item">
+                    <span
+                      className={`page-link ${currentPage === index + 1 + (currentBlock - 1) * 5
+                          ? 'active'
+                          : ''
+                        }`}
+                      onClick={() =>
+                        setCurrentPage(index + 1 + (currentBlock - 1) * 5)
+                      }
+                    >
+                      {index + 1 + (currentBlock - 1) * 5}
+                    </span>
+                  </li>
+                ))}
                 <li
-                  className={`page-item ${
-                    currentPage * itemsPerPage >= users.length ? 'disabled' : ''
-                  }`}
+                  className={`page-item ${currentPage * itemsPerPage >= filteredData.length ? 'disabled' : ''
+                    }`}
                 >
                   <span
                     className="page-link"

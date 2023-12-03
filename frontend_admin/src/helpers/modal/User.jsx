@@ -1,6 +1,7 @@
-import { createUser } from '@/redux/user';
+import { createUser, fetchUsers } from '@/redux/user';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import SweetAlert from "@/helpers/sweetalert";
 
 export default function ModalUser() {
   const [name, setName] = useState('');
@@ -29,7 +30,11 @@ export default function ModalUser() {
       password: password,
     };
 
-    dispatch(createUser(formData));
+    dispatch(createUser(formData)).then(() =>{
+      SweetAlert.success("Successfully", "User created successfully!").then(() => dispatch(fetchUsers()));
+    }).catch(() => {
+      SweetAlert.error("Error!!",  "Failed to create user. Please try again.")
+    })
   };
 
   return (

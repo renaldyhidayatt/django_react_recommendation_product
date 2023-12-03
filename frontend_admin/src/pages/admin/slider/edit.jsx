@@ -1,7 +1,5 @@
-'use client';
-
 import { fetchSliderById, updateSliderById } from '@/redux/slider';
-
+import { SweetAlert } from '@/helpers';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -43,7 +41,10 @@ const EditSliderPage = () => {
     }
 
     dispatch(updateSliderById({ id: parseInt(id), formData })).then((data) => {
-      navigate('/admin/slider');
+      SweetAlert.success('Success', 'Slider berhasil diupdate').then(() => {
+        navigate("/admin/slider");
+
+      })
     });
   };
 
@@ -113,22 +114,20 @@ const EditSliderPage = () => {
                   }}
                 />
               </div>
-              <div className="mb-3">
-                <label htmlFor="current_image" className="form-label">
-                  Gambar Saat Ini
-                </label>
-                <br />
-                {image ? (
-                  <Image
-                    src={image}
-                    alt="Current Image"
-                    height={100}
-                    width={100}
-                  />
-                ) : (
-                  <span>Tidak ada gambar</span>
-                )}
-              </div>
+              {slider && (
+                <div className="mb-3">
+                  <label htmlFor="current_image" className="form-label">
+                    Gambar Saat Ini
+                  </label>
+                  <br />
+                  {image ? (
+                    <img src={image} alt="Current Image" height={100} width={100} />
+                  ) : (
+                    <span>Tidak ada gambar</span>
+                  )}
+                </div>
+              )}
+
               <button type="submit" name="submit" className="btn btn-primary">
                 Submit
               </button>

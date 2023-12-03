@@ -21,7 +21,9 @@ export default function CartPage() {
     const handleRemoveFromCart = (cart_id) => {
         dispatch(removeFromCart(cart_id))
             .then(() => {
-                SweetAlert.success('Success', 'Item removed from cart.');
+                SweetAlert.success('Success', 'Item removed from cart.').then(() => {
+                    dispatch(fetchCartItems());
+                })
             })
             .catch(() => {
                 SweetAlert.error('Error', 'Failed to remove item from cart.');

@@ -1,5 +1,3 @@
-'use client';
-
 import { SweetAlert } from '@/helpers';
 import { deleteSliderById, fetchAllSliders } from '@/redux/slider';
 import { useEffect } from 'react';
@@ -15,7 +13,7 @@ const SliderPage = () => {
 
   const handleDeleteSlider = (id) => {
     const confirmed = window.confirm(
-      'Apakah Anda yakin ingin menghapus rekaman ini?'
+      'Are you sure you want to delete this record?'
     );
     if (confirmed) {
       dispatch(deleteSliderById(id))

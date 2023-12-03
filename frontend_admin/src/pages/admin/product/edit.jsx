@@ -1,6 +1,6 @@
 import { fetchAllCategories } from '@/redux/category';
 import { fetchProductById, updateProductById } from '@/redux/product';
-
+import { SweetAlert } from '@/helpers';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -109,8 +109,10 @@ const EditProductPage = () => {
     }
 
     dispatch(updateProductById({ id, form })).then((data) => {
-      console.log('update: ', data);
-      navigate('/admin/product');
+      SweetAlert.success('Success', 'Product berhasil diupdate').then(() => {
+        navigate("/admin/product");
+
+      })
     });
   };
 

@@ -41,7 +41,7 @@ export const updateUserById = createAsyncThunk(
   'users/updateById',
   async ({ id, formData }, { rejectWithValue }) => {
     try {
-      const response = await myApi.put(`/user/${id}`, formData, {
+      const response = await myApi.put(`/user/update/${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 

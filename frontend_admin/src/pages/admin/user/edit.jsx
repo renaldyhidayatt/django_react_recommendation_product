@@ -1,13 +1,15 @@
 import { fetchUserById, updateUserById } from '@/redux/user';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { SweetAlert } from '@/helpers';
 
 const EditUserPage = () => {
-  const {} = useParams();
+  const {id} = useParams();
   const dispatch = useDispatch();
 
   const myuser = useSelector((state) => state.userReducer);
+  const navigate = useNavigate();
 
   const { user, loading, error } = myuser;
   const [name, setName] = useState('');
@@ -21,8 +23,14 @@ const EditUserPage = () => {
     formData.append('name', name);
     formData.append('email', email);
     formData.append('password', password);
+    // bisa
 
-    dispatch(updateUserById({ id, formData }));
+    dispatch(updateUserById({ id, formData })).then(() => {
+      SweetAlert.success('Success', 'User berhasil diupdate').then(() => {
+        navigate("/admin/user");
+
+      })
+    })
   };
 
   useEffect(() => {

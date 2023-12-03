@@ -19,11 +19,13 @@ from .models import Order, OrderItems, ShippingAddress
 
 class GetOrderView(APIView):
     def get(self, request):
-        orders = Order.objects.all()[:10]
+        orders = Order.objects.all()[:500]
 
         serializer = OrderSerializer(orders, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 
 
 class OrderImportView(APIView):
@@ -292,3 +294,17 @@ class ExportCSVShippingAddress(APIView):
             )
 
         return response
+
+
+
+class DeleteOrderView(APIView):
+    def get_object(self, pk):
+        try:
+            return Order.objects.get(pk=pk)
+        except Order.DoesNotExist:
+            raise Http404
+
+    def delete(self, request, pk):
+        order = self.get_object(pk)
+        order.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

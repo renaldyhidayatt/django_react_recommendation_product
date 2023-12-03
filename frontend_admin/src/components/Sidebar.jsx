@@ -123,9 +123,9 @@ const Sidebar = () => {
           rect.top >= 0 &&
           rect.left >= 0 &&
           rect.bottom <=
-            (window.innerHeight || document.documentElement.clientHeight) &&
+          (window.innerHeight || document.documentElement.clientHeight) &&
           rect.right <=
-            (window.innerWidth || document.documentElement.clientWidth)
+          (window.innerWidth || document.documentElement.clientWidth)
         );
       }
       return false;
@@ -222,6 +222,13 @@ const Sidebar = () => {
               <span>Dashboard</span>
             </Link>
           </li>
+          <li className="sidebar-item">
+            <a href="https://proyekakhiranalytics-8z9rndznzsefms2wndqsne.streamlit.app/" className="sidebar-link" target="_blank" rel="noopener noreferrer">
+              <i className="bi bi-grid-fill" />
+              <span>Dashboard Analytics</span>
+            </a>
+          </li>
+
           <li className="sidebar-item">
             <Link to={'/admin/user'} className="sidebar-link">
               <i className="bi bi-person-fill" />
