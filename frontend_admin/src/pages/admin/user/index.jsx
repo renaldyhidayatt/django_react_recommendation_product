@@ -24,7 +24,6 @@ const UserPage = () => {
       });
   }, [dispatch]);
 
-
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -33,17 +32,17 @@ const UserPage = () => {
 
   const handleDeleteUser = (userId) => {
     if (window.confirm('Are you sure you want to delete this record?')) {
-      dispatch(deleteUserById(id))
+      dispatch(deleteUserById(userId))
         .then(() => {
-          SweetAlert.success('Success', 'Item Remove Category');
+          SweetAlert.success('Success', 'Item Remove User').then(() => {
+            dispatch(fetchUsers());
+          });
         })
         .catch(() => {
-          SweetAlert.error('Error', 'Failed to remove item from Category');
+          SweetAlert.error('Error', 'Failed to remove item from User');
         });
     }
   };
-
-
 
   const handleSearch = (e) => {
     setCurrentPage(1);
@@ -57,18 +56,13 @@ const UserPage = () => {
     );
   });
 
-
   const pageCount = Math.ceil(filteredData.length / itemsPerPage);
   const displayedUsers = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-
- 
-
   const currentBlock = Math.ceil(currentPage / 5);
-
 
   if (loading) {
     return <div>Loading...</div>;
@@ -167,12 +161,13 @@ const UserPage = () => {
                     </td>
                   </tr>
                 ))}
-
               </tbody>
             </table>
             <nav aria-label="Page navigation example">
               <ul className="pagination pagination-primary">
-                <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                <li
+                  className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}
+                >
                   <span
                     className="page-link"
                     onClick={() => setCurrentPage(currentPage - 1)}
@@ -183,10 +178,11 @@ const UserPage = () => {
                 {[...Array(pageCount > 5 ? 5 : pageCount)].map((_, index) => (
                   <li key={index} className="page-item">
                     <span
-                      className={`page-link ${currentPage === index + 1 + (currentBlock - 1) * 5
+                      className={`page-link ${
+                        currentPage === index + 1 + (currentBlock - 1) * 5
                           ? 'active'
                           : ''
-                        }`}
+                      }`}
                       onClick={() =>
                         setCurrentPage(index + 1 + (currentBlock - 1) * 5)
                       }
@@ -196,8 +192,11 @@ const UserPage = () => {
                   </li>
                 ))}
                 <li
-                  className={`page-item ${currentPage * itemsPerPage >= filteredData.length ? 'disabled' : ''
-                    }`}
+                  className={`page-item ${
+                    currentPage * itemsPerPage >= filteredData.length
+                      ? 'disabled'
+                      : ''
+                  }`}
                 >
                   <span
                     className="page-link"

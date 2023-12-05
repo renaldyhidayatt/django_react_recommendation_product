@@ -10,7 +10,6 @@ const OrderPage = () => {
 
   const { error, loading, orders } = order;
 
-
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredOrder, setFilteredOrder] = useState([]);
@@ -20,7 +19,6 @@ const OrderPage = () => {
     dispatch(fetchOrdersAsync());
   }, []);
 
-
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -28,16 +26,16 @@ const OrderPage = () => {
   }, [currentPage, orders]);
 
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this record?")) {
+    if (window.confirm('Are you sure you want to delete this record?')) {
       dispatch(deleteOrderAsync(id))
         .then(() => {
-          SweetAlert.success('Success', 'Item Remove Order')
-            .then(() => window.location.reload());
+          SweetAlert.success('Success', 'Item Remove Order').then(() =>
+            dispatch(fetchOrdersAsync())
+          );
         })
         .catch(() => {
           SweetAlert.error('Error', 'Failed to remove item from Order');
         });
-
     }
   };
 
@@ -50,9 +48,15 @@ const OrderPage = () => {
     return (
       order.id.toString().includes(searchTerm) || // Filter berdasarkan ID pesanan
       order.name.toLowerCase().includes(searchTerm.toLowerCase()) || // Filter berdasarkan nama pelanggan
-      order.shipping_address.provinsi.toLowerCase().includes(searchTerm.toLowerCase()) || // Filter berdasarkan provinsi
-      order.shipping_address.kota.toLowerCase().includes(searchTerm.toLowerCase()) || // Filter berdasarkan kota
-      order.shipping_address.alamat.toLowerCase().includes(searchTerm.toLowerCase()) || // Filter berdasarkan alamat
+      order.shipping_address.provinsi
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) || // Filter berdasarkan provinsi
+      order.shipping_address.kota
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) || // Filter berdasarkan kota
+      order.shipping_address.alamat
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) || // Filter berdasarkan alamat
       order.courier.toLowerCase().includes(searchTerm.toLowerCase()) || // Filter berdasarkan kurir
       order.shippingMethod.toLowerCase().includes(searchTerm.toLowerCase()) || // Filter berdasarkan metode pengiriman
       order.shippingCost.toString().includes(searchTerm) || // Filter berdasarkan biaya pengiriman
@@ -67,7 +71,6 @@ const OrderPage = () => {
     currentPage * itemsPerPage
   );
   const currentBlock = Math.ceil(currentPage / 5);
-
 
   if (loading) {
     return <h1>Loading</h1>;
@@ -170,7 +173,9 @@ const OrderPage = () => {
             </table>
             <nav aria-label="Page navigation example">
               <ul className="pagination pagination-primary">
-                <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                <li
+                  className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}
+                >
                   <span
                     className="page-link"
                     onClick={() => setCurrentPage(currentPage - 1)}
@@ -181,10 +186,11 @@ const OrderPage = () => {
                 {[...Array(pageCount > 5 ? 5 : pageCount)].map((_, index) => (
                   <li key={index} className="page-item">
                     <span
-                      className={`page-link ${currentPage === index + 1 + (currentBlock - 1) * 5
-                        ? 'active'
-                        : ''
-                        }`}
+                      className={`page-link ${
+                        currentPage === index + 1 + (currentBlock - 1) * 5
+                          ? 'active'
+                          : ''
+                      }`}
                       onClick={() =>
                         setCurrentPage(index + 1 + (currentBlock - 1) * 5)
                       }
@@ -194,8 +200,11 @@ const OrderPage = () => {
                   </li>
                 ))}
                 <li
-                  className={`page-item ${currentPage * itemsPerPage >= filteredData.length ? 'disabled' : ''
-                    }`}
+                  className={`page-item ${
+                    currentPage * itemsPerPage >= filteredData.length
+                      ? 'disabled'
+                      : ''
+                  }`}
                 >
                   <span
                     className="page-link"
