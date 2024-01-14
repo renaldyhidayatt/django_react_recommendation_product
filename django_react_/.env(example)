@@ -1,0 +1,17 @@
+# USER Environment Variables
+
+# these section will be preserved as-is during the build
+ENV1=
+
+# FRAMEWORK Environment Variables
+# these section will be automatically overridden by the framework during the build (depending on the framework)
+CLOUD_ENV=
+TEMP_DIR=
+
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_SECRET_KEY=
+
+RAJAONGKIR_API=
+MIDTRANS_SERVER_KEY=
+MIDTRANS_CLIENT_KEY=
